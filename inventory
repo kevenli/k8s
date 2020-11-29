@@ -1,0 +1,6 @@
+[master]
+192.168.50.10 ansible_user=vagrant ansible_password=vagrant ansible_connection=ssh
+
+[node]
+192.168.50.11
+192.168.50.12
