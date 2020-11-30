@@ -20,6 +20,9 @@ Vagrant.configure("2") do |config|
         #         node_ip: "192.168.50.10",
         #     }
         # end
+        if Vagrant.has_plugin?("vagrant-proxyconf")
+            config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
+        end
     end
 
     (1..N).each do |i|
@@ -33,6 +36,9 @@ Vagrant.configure("2") do |config|
             #         node_ip: "192.168.50.#{i + 10}",
             #     }
             # end
+            if Vagrant.has_plugin?("vagrant-proxyconf")
+                config.proxy.no_proxy = "localhost,127.0.0.1,.example.com,192.168.50.10"
+            end
         end
     end
 end
