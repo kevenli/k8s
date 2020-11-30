@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: Add IP address of all hosts to all hosts
+    become: yes
+    template:
+      src: templates/hosts.j2
+      dest: /etc/hosts
