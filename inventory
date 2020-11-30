@@ -1,6 +1,9 @@
-[master]
-192.168.50.10 ansible_user=vagrant ansible_password=vagrant ansible_connection=ssh
+[masters]
+master ansible_host=192.168.50.10 ansible_user=vagrant ansible_password=vagrant ansible_connection=ssh
 
-[node]
-192.168.50.11
-192.168.50.12
+[workers]
+worker1 ansible_host=192.168.50.11 ansible_user=vagrant ansible_password=vagrant ansible_connection=ssh
+worker2 ansible_host=192.168.50.12 ansible_user=vagrant ansible_password=vagrant ansible_connection=ssh
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
