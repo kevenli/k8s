@@ -13,16 +13,6 @@ Vagrant.configure("2") do |config|
         master.vm.box = IMAGE_NAME
         master.vm.network "private_network", ip: "192.168.50.10"
         master.vm.hostname = "k8s-master"
-        config.vm.synced_folder ".", "/vagrant", owner: "root", group: "root", type: "rsync"
-        # master.vm.provision "ansible" do |ansible|
-        #     ansible.playbook = "kubernetes-setup/master-playbook.yml"
-        #     ansible.extra_vars = {
-        #         node_ip: "192.168.50.10",
-        #     }
-        # end
-        if Vagrant.has_plugin?("vagrant-proxyconf")
-            config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
-        end
     end
 
     (1..N).each do |i|
@@ -30,16 +20,13 @@ Vagrant.configure("2") do |config|
             node.vm.box = IMAGE_NAME
             node.vm.network "private_network", ip: "192.168.50.#{i + 10}"
             node.vm.hostname = "node-#{i}"
-            # node.vm.provision "ansible" do |ansible|
-            #     ansible.playbook = "kubernetes-setup/node-playbook.yml"
-            #     ansible.extra_vars = {
-            #         node_ip: "192.168.50.#{i + 10}",
-            #     }
-            # end
-            ENV['VAGRANT_NO_PROXY']  = "localhost,127.0.0.1,.example.com,192.168.50.10"
-            if Vagrant.has_plugin?("vagrant-proxyconf")
-                config.proxy.no_proxy = "localhost,127.0.0.1,.example.com,192.168.50.10"
-            end
         end
+    end
+
+    config.vm.define "workstation" do |workstation|
+        workstation.vm.box = 'bento/centos-8'
+        workstation.vm.network "private_network", ip: "192.168.50.111"
+        workstation.vm.hostname = "workstation"
+        config.vm.synced_folder ".", "/vagrant", owner: "root", group: "root", type: "rsync"
     end
 end
