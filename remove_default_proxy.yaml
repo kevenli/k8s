@@ -1,0 +1,9 @@
+---
+- name: remove default proxy file
+  become: yes
+  hosts: all
+  tasks:
+    - name: remove proxy.sh
+      file:
+        path: /etc/profile.d/proxy.sh
+        state: absent

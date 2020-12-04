@@ -1,0 +1,38 @@
+---
+
+- name: config network
+  hosts: all
+  become: yes
+  tasks:
+    # - name: ensure networkmanager package
+    #   package:
+    #     name: 
+    #       - network-manager
+    #     state: present
+
+    # - name: network-manager service
+    #   service:
+    #     name: network-manager
+    #     state: started
+    #     enabled: true
+
+    # - name: intranet 
+    #   nmcli:
+    #     type: ethernet
+    #     conn_name: 'intranet'
+    #     state: present
+    #     autoconnect: yes
+    #     dns4: 192.168.50.9
+    #     gw4: 192.168.50.9
+    #     ip4: "{{ IP4 }}"
+    - name: setup gateway
+      block:
+        - command: "route delete default"
+      always:
+        - command: "route add default gw 192.168.50.9"
+      # net_static_route:
+      #   prefix: 0.0.0.0
+      #   mask: 0.0.0.0
+      #   next_hop: 192.168.50.9
+        
+        
